@@ -1,4 +1,4 @@
-package com.digital.touchvision.recognition
+package com.digital.touchvision.data.recognition
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo

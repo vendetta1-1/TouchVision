@@ -1,6 +1,5 @@
-package com.digital.touchvision.ui.theme
+package com.digital.touchvision.presentation.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

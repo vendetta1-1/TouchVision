@@ -41,9 +41,11 @@ android {
 }
 
 dependencies {
+    //navigation
+    implementation(libs.navigation)
     //MLKit
-    implementation(libs.ink.recognition)
-    implementation(libs.text.recognition)
+    implementation(libs.recognition.ink)
+    implementation(libs.recognition.text)
     //dagger
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)

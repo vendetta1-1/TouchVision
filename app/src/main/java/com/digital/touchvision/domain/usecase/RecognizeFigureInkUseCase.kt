@@ -1,13 +1,13 @@
 package com.digital.touchvision.domain.usecase
 
-import android.media.Image
+import com.digital.touchvision.domain.entity.Figure
 import com.digital.touchvision.domain.repository.TouchVisionRepository
 import javax.inject.Inject
 
-class VoiceActingUseCase @Inject constructor(
+class RecognizeFigureInkUseCase @Inject constructor(
     private val repository: TouchVisionRepository
 ) {
-    operator fun invoke(image: Image) {
-        repository.voiceActingScreenImage(image)
+    operator fun invoke(): Figure {
+        return repository.recognizeFigureInk()
     }
 }
