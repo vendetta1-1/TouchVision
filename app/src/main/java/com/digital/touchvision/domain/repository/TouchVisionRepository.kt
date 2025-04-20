@@ -1,11 +1,11 @@
 package com.digital.touchvision.domain.repository
 
 import android.media.Image
-import com.digital.touchvision.domain.entity.Figure
+import com.google.mlkit.vision.digitalink.Ink
 
 interface TouchVisionRepository {
 
-    fun voiceActingScreenImage(image: Image)
+    fun recognizeTextOnScreen(image: Image): String
 
-    fun recognizeFigureInk(/*возможно стоит принимать какой что то*/): Figure
+    fun recognizeFigureInk(ink: Ink): String
 }

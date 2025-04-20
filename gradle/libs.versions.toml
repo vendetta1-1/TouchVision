@@ -17,8 +17,8 @@ textRecognition = "19.0.1"
 
 [libraries]
 navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
-dagger = {module = "com.google.dagger:dagger", version.ref = "dagger"}
-dagger-compiler = {module = "com.google.dagger:dagger-compiler", version.ref = "dagger"}
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

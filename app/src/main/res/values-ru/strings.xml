@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TouchVision</string>
+    <string name="accessibility_service_description">Сервис для распознования текста на экране</string>
+    <string name="hello">ПРИВЕТ!</string>
+    <string name="settings_content_description">настройки</string>
+    <string name="bibi_name">биби</string>
+    <string name="start_work">начать работу</string>
+    <string name="together_already">вместе уже</string>
+    <string name="days">дня(-ей)</string>
+</resources>

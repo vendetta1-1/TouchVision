@@ -6,18 +6,32 @@ import android.graphics.Bitmap
 import android.graphics.ColorSpace
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import com.digital.touchvision.TouchVisionApp
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
 class VisionService : AccessibilityService() {
-    private val textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+
+    private val component by lazy {
+        (application as TouchVisionApp).component
+    }
+
+    //вместо recognizer нужно инжектить usecase'ы
+    private lateinit var textRecognizer: TextRecognizer
+
+    override fun onCreate() {
+        super.onCreate()
+        textRecognizer = component.getTextRecognizer()
+    }
 
     override fun onServiceConnected() {
-        val config = AccessibilityServiceInfo()
-        config.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
-        config.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
-        config.flags = AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+        val config = AccessibilityServiceInfo().apply {
+            eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
+            flags = AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+        }
         serviceInfo = config
     }
 

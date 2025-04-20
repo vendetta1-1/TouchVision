@@ -4,10 +4,10 @@ import android.media.Image
 import com.digital.touchvision.domain.repository.TouchVisionRepository
 import javax.inject.Inject
 
-class VoiceActingUseCase @Inject constructor(
+class RecognizeTextOnScreenUseCase @Inject constructor(
     private val repository: TouchVisionRepository
 ) {
-    operator fun invoke(image: Image) {
-        repository.voiceActingScreenImage(image)
+    operator fun invoke(image: Image) : String {
+       return repository.recognizeTextOnScreen(image)
     }
 }

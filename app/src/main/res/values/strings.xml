@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">TouchVision</string>
-    <string name="accessibility_service_description">Сервис для распознавания текста на экране</string>
+    <string name="accessibility_service_description">service for recognition text on screen</string>
+    <string name="hello">HELLO!</string>
+    <string name="settings_content_description">settings</string>
+    <string name="bibi_name">bibi</string>
+    <string name="start_work">start</string>
+    <string name="together_already">together already</string>
+    <string name="days">days</string>
 </resources>
