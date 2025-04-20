@@ -1,6 +1,8 @@
 package com.digital.touchvision
 
 import android.app.Application
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import com.digital.touchvision.di.DaggerVisionComponent
 import com.digital.touchvision.di.VisionComponent
 import com.google.mlkit.vision.digitalink.DigitalInkRecognition
@@ -25,4 +27,9 @@ class TouchVisionApp : Application() {
             )
         )
     }
+}
+
+@Composable
+fun getApplicationComponent(): VisionComponent {
+    return (LocalContext.current.applicationContext as TouchVisionApp).component
 }

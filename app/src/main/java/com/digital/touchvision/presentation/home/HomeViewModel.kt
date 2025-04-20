@@ -12,11 +12,15 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     private val _state = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val state = _state.asStateFlow()
 
-    fun startOrStop() {
+    fun startService() {
         viewModelScope.launch {
-            _state.emit(
-                value = if (state.value is HomeScreenState.Initial) HomeScreenState.Start else HomeScreenState.End
-            )
+            _state.emit(HomeScreenState.Start)
+        }
+    }
+
+    fun stopService() {
+        viewModelScope.launch {
+            _state.emit(HomeScreenState.End)
         }
     }
 }

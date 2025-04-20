@@ -5,6 +5,9 @@
     <string name="settings_content_description">settings</string>
     <string name="bibi_name">bibi</string>
     <string name="start_work">start</string>
+    <string name="end_work">end</string>
     <string name="together_already">together already</string>
     <string name="days">days</string>
+    <string name="bibi_is_getting_ready_for_work">Bibi is getting ready for work…</string>
+    <string name="bibi_was_ready">We can start work!</string>
 </resources>

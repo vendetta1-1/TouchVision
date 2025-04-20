@@ -6,6 +6,9 @@
     <string name="settings_content_description">настройки</string>
     <string name="bibi_name">биби</string>
     <string name="start_work">начать работу</string>
+    <string name="end_work">закончить работу</string>
     <string name="together_already">вместе уже</string>
     <string name="days">дня(-ей)</string>
+    <string name="bibi_is_getting_ready_for_work">Биби готовится к работе…</string>
+    <string name="bibi_was_ready">Можем начинать работу!</string>
 </resources>
