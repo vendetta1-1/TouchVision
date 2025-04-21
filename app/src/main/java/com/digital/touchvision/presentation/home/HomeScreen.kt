@@ -1,5 +1,6 @@
 package com.digital.touchvision.presentation.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,31 +36,45 @@ import com.digital.touchvision.presentation.factory.VisionViewModelFactory
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    onSettingsClickListener: () -> Unit, viewModelFactory: VisionViewModelFactory
+    viewModelFactory: VisionViewModelFactory,
+    onButtonClickListener: (HomeScreenState) -> Unit
 ) {
     val viewModel: HomeViewModel = viewModel(factory = viewModelFactory)
     val state = viewModel.state.collectAsState()
-    HomeScreenContent(
-        onSettingsClickListener = onSettingsClickListener,
-        onStartClickListener = {
-            if (state.value is HomeScreenState.Initial || state.value is HomeScreenState.End) {
+    Log.d("TAG", state.value.toString())
+    when (val currentState = state.value) {
+        HomeScreenState.End -> HomeScreenContent(
+            onButtonClickListener = {
                 viewModel.startService()
-            } else {
+                onButtonClickListener(currentState)
+            },
+            currentState = currentState
+        )
+
+        HomeScreenState.Initial -> HomeScreenContent(
+            onButtonClickListener = {
+                viewModel.startService()
+                onButtonClickListener(currentState)
+            },
+
+            currentState = currentState
+        )
+
+        HomeScreenState.Start -> HomeScreenContent(
+            onButtonClickListener = {
                 viewModel.stopService()
-            }
-        },
-        buttonText = if (state.value is HomeScreenState.Initial || state.value is HomeScreenState.End) {
-            stringResource(R.string.start_work)
-        } else {
-            stringResource(R.string.end_work)
-        },
-    )
+                onButtonClickListener(currentState)
+            },
+            currentState = currentState
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreenContent(
-    onSettingsClickListener: () -> Unit, onStartClickListener: () -> Unit, buttonText: String
+    onButtonClickListener: () -> Unit,
+    currentState: HomeScreenState
 ) {
     Scaffold { values ->
         Column(
@@ -85,10 +100,14 @@ private fun HomeScreenContent(
                             .padding(horizontal = 10.dp),
                         shape = RoundedCornerShape(26.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onPrimary),
-                        onClick = onStartClickListener,
+                        onClick = onButtonClickListener,
                     ) {
                         Text(
-                            text = buttonText.uppercase(),
+                            text = if (currentState is HomeScreenState.Start || currentState is HomeScreenState.Initial) {
+                                stringResource(R.string.start_work)
+                            } else {
+                                stringResource(R.string.end_work)
+                            }.uppercase(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.White,
                             maxLines = 1

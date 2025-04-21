@@ -10,7 +10,6 @@ fun AppNavGraph(
     navHostController: NavHostController,
     startScreenContent: @Composable () -> Unit,
     homeScreenContent: @Composable () -> Unit,
-    loadingScreenContent: @Composable () -> Unit
 ) {
     NavHost(
         navController = navHostController,
@@ -22,10 +21,6 @@ fun AppNavGraph(
 
         composable(Screen.Home.route) {
             homeScreenContent()
-        }
-
-        composable(Screen.Loading.route) {
-            loadingScreenContent()
         }
     }
 }

@@ -6,12 +6,13 @@ import com.digital.touchvision.navigation.Screen
 import com.digital.touchvision.navigation.rememberNavigationState
 import com.digital.touchvision.presentation.factory.VisionViewModelFactory
 import com.digital.touchvision.presentation.home.HomeScreen
-import com.digital.touchvision.presentation.loading.LoadingScreen
+import com.digital.touchvision.presentation.home.HomeScreenState
 import com.digital.touchvision.presentation.start.StartScreen
 
 @Composable
 fun RootScreen(
-    viewModelFactory: VisionViewModelFactory
+    viewModelFactory: VisionViewModelFactory,
+    onButtonClickListener: (HomeScreenState) -> Unit
 ) {
     val navigationState = rememberNavigationState()
 
@@ -23,13 +24,10 @@ fun RootScreen(
         },
         homeScreenContent = {
             HomeScreen(
-                onSettingsClickListener = { navigationState.navigateTo(Screen.Settings.route) },
-                viewModelFactory = viewModelFactory
-            )
-        },
-        loadingScreenContent = {
-            LoadingScreen(
-                viewModelFactory = viewModelFactory
+                viewModelFactory = viewModelFactory,
+                onButtonClickListener = {
+                    onButtonClickListener(it)
+                }
             )
         }
     )

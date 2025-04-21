@@ -14,8 +14,11 @@ coroutines = "1.10.2"
 ksp = "2.1.20-1.0.32"
 dagger = "2.56.1"
 textRecognition = "19.0.1"
+retrofit = "2.11.0"
 
 [libraries]
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }

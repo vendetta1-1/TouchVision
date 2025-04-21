@@ -41,6 +41,9 @@ android {
 }
 
 dependencies {
+    //retrofit
+    implementation(libs.retrofit)
+    implementation(libs.gson)
     //navigation
     implementation(libs.navigation)
     //MLKit

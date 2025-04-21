@@ -15,8 +15,6 @@ import dagger.Component
 @ApplicationScope
 interface VisionComponent {
 
-    fun getTextRecognizer(): TextRecognizer
-
     fun getRecognizeFigureInkUseCase(): RecognizeFigureInkUseCase
 
     fun getRecognizeTextOnScreenUseCase(): RecognizeTextOnScreenUseCase

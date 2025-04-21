@@ -2,15 +2,18 @@ package com.digital.touchvision.data.recognition
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ColorSpace
+import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import com.digital.touchvision.TouchVisionApp
-import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizer
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.digital.touchvision.domain.usecase.RecognizeFigureInkUseCase
+import com.digital.touchvision.domain.usecase.RecognizeTextOnScreenUseCase
+import java.util.Locale
 
 class VisionService : AccessibilityService() {
 
@@ -18,12 +21,32 @@ class VisionService : AccessibilityService() {
         (application as TouchVisionApp).component
     }
 
-    //вместо recognizer нужно инжектить usecase'ы
-    private lateinit var textRecognizer: TextRecognizer
+    private val textToSpeech by lazy {
+        TextToSpeech(
+            this,
+            object : TextToSpeech.OnInitListener {
+                override fun onInit(status: Int) {
+                    if (status == TextToSpeech.SUCCESS) {
+                        setLanguage()
+                    }
+                }
+            },
+            TextToSpeech.Engine.ACTION_GET_SAMPLE_TEXT
+        )
+    }
+
+    private fun setLanguage() {
+        textToSpeech.language = Locale.getDefault()
+    }
+
+    private lateinit var inkRecognizeFigureInkUseCase: RecognizeFigureInkUseCase
+    private lateinit var textRecognizeTextOnScreenUseCase: RecognizeTextOnScreenUseCase
 
     override fun onCreate() {
         super.onCreate()
-        textRecognizer = component.getTextRecognizer()
+        setLanguage()
+        inkRecognizeFigureInkUseCase = component.getRecognizeFigureInkUseCase()
+        textRecognizeTextOnScreenUseCase = component.getRecognizeTextOnScreenUseCase()
     }
 
     override fun onServiceConnected() {
@@ -53,10 +76,13 @@ class VisionService : AccessibilityService() {
                         screenshot.hardwareBuffer,
                         ColorSpace.get(ColorSpace.Named.SRGB)
                     )?.let {
-                        processImageWithMLKit(
-                            it
+                        val text = textRecognizeTextOnScreenUseCase(it)
+                        textToSpeech.speak(
+                            text,
+                            TextToSpeech.QUEUE_FLUSH,
+                            Bundle.EMPTY,
+                            "text_on_screen"
                         )
-
                     }
                 }
 
@@ -67,16 +93,15 @@ class VisionService : AccessibilityService() {
         )
     }
 
-    private fun processImageWithMLKit(bitmap: Bitmap) {
-        val image = InputImage.fromBitmap(bitmap, 0)
-        textRecognizer.process(image)
-            .addOnSuccessListener { visionText ->
-
-            }
-            .addOnFailureListener { e ->
-                Log.e("MLKit", "Text recognition error", e)
-            }
+    override fun onDestroy() {
+        super.onDestroy()
+        textToSpeech.stop()
+        textToSpeech.shutdown()
     }
 
     override fun onInterrupt() {}
+
+    companion object {
+        fun newIntent(context: Context): Intent = Intent(context, VisionService::class.java)
+    }
 }
